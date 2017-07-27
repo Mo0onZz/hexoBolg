@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+
+  
+  
+  
+  
+  
+  
+  <title>Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Blog">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Blog">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Blog" rel="home">Blog</a>
+      </h1>
+      
+        <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+        <h2 class="site-description"><script>hitokoto();</script></h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-postgresql" class="post-postgresql post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/07/27/postgresql/">postgresql</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/07/27/postgresql/" data-id="cj5ml9d5j0005jctl5034ywsi" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="安装及连接"><a href="#安装及连接" class="headerlink" title="安装及连接"></a>安装及连接</h2><h3 id="docker安装postgresql"><a href="#docker安装postgresql" class="headerlink" title="docker安装postgresql"></a>docker安装postgresql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">docker run --name postgresql -itd --restart always \</div><div class="line">  --publish 5432:5432 \</div><div class="line">  --volume /srv/docker/postgresql:/var/lib/postgresql \</div><div class="line">  sameersbn/postgresql:9.6-2</div></pre></td></tr></table></figure>
+<h3 id="连接postgresql"><a href="#连接postgresql" class="headerlink" title="连接postgresql"></a>连接postgresql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it postgresql sudo -u postgres psql</div></pre></td></tr></table></figure>
+<h2 id="postgresql设置"><a href="#postgresql设置" class="headerlink" title="postgresql设置"></a>postgresql设置</h2><h3 id="1-使用-password命令，为postgres用户设置一个密码"><a href="#1-使用-password命令，为postgres用户设置一个密码" class="headerlink" title="1.使用\password命令，为postgres用户设置一个密码"></a>1.使用\password命令，为postgres用户设置一个密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\password postgres</div></pre></td></tr></table></figure>
+<h3 id="2-创建数据库用户dbuser，并设置密码。"><a href="#2-创建数据库用户dbuser，并设置密码。" class="headerlink" title="2.创建数据库用户dbuser，并设置密码。"></a>2.创建数据库用户dbuser，并设置密码。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE USER dbuser WITH PASSWORD &apos;password&apos;;</div></pre></td></tr></table></figure>
+<h3 id="3-创建用户数据库，这里为exampledb，并指定所有者为dbuser。"><a href="#3-创建用户数据库，这里为exampledb，并指定所有者为dbuser。" class="headerlink" title="3.创建用户数据库，这里为exampledb，并指定所有者为dbuser。"></a>3.创建用户数据库，这里为exampledb，并指定所有者为dbuser。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE exampledb OWNER dbuser;</div></pre></td></tr></table></figure>
+<h3 id="4-将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。"><a href="#4-将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。" class="headerlink" title="4.将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。"></a>4.将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;</div></pre></td></tr></table></figure>
+<h3 id="5-使用-q命令退出控制台（也可以直接按ctrl-D）。"><a href="#5-使用-q命令退出控制台（也可以直接按ctrl-D）。" class="headerlink" title="5.使用\q命令退出控制台（也可以直接按ctrl+D）。"></a>5.使用\q命令退出控制台（也可以直接按ctrl+D）。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\q</div></pre></td></tr></table></figure>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/07/27/postgresql/">
+    <time datetime="2017-07-27T15:04:25.173Z" class="entry-date">
+        2017-07-27
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-hello-world" class="post-hello-world post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/07/27/hello-world/">Hello World</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/07/27/hello-world/" data-id="cj5mhq2rg0000hgtlyx8gguba" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/07/27/hello-world/">
+    <time datetime="2017-07-27T13:42:19.057Z" class="entry-date">
+        2017-07-27
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Docker学习笔记" class="post-Docker学习笔记 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/07/27/Docker学习笔记/">Docker学习笔记</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/07/27/Docker学习笔记/" data-id="cj5ml9d4w0000jctlhonvsvkw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <hr>
+<h2 id="1-Docker安装"><a href="#1-Docker安装" class="headerlink" title="1.Docker安装"></a>1.Docker安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install curl</div><div class="line">curl -sSL https://get.docker.com/ | sh</div></pre></td></tr></table></figure>
+<h2 id="2-Docker容器时间设置"><a href="#2-Docker容器时间设置" class="headerlink" title="2.Docker容器时间设置"></a>2.Docker容器时间设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ -v /etc/localtime:/etc/localtime -v /etc/timezone:/etc/timezone</div></pre></td></tr></table></figure>
+<h2 id="3-jenkins-gradle"><a href="#3-jenkins-gradle" class="headerlink" title="3.jenkins-gradle"></a>3.jenkins-gradle</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Dockerfile</div><div class="line"></div><div class="line">FROM jenkinsci/jenkins</div><div class="line"></div><div class="line">ENV SDKMAN_DIR /usr/share/sdkman/dir</div><div class="line"></div><div class="line">USER root</div><div class="line">ADD jenkins-gradle.sh /usr/local/bin/</div><div class="line">ENTRYPOINT [&quot;/bin/tini&quot;, &quot;--&quot;, &quot;jenkins-gradle.sh&quot;]</div><div class="line">RUN apt-get update &amp;&amp; apt-get install -y zip &amp;&amp; rm -rf /var/lib/apt/lists/* \</div><div class="line">&amp;&amp; mkdir -p &quot;$(dirname &quot;$SDKMAN_DIR&quot;)&quot; \</div><div class="line">&amp;&amp; chown -R jenkins: &quot;$(dirname &quot;$SDKMAN_DIR&quot;)&quot;</div><div class="line"></div><div class="line">USER jenkins</div><div class="line">SHELL [&quot;/bin/bash&quot;, &quot;-c&quot;]</div><div class="line">RUN curl -s &quot;https://get.sdkman.io&quot; | bash \</div><div class="line">&amp;&amp; source &quot;$SDKMAN_DIR/bin/sdkman-init.sh&quot; \</div><div class="line">&amp;&amp; sdk install gradle \</div><div class="line">&amp;&amp; /usr/local/bin/install-plugins.sh git gradle workflow-aggregator</div></pre></td></tr></table></figure>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/07/27/Docker学习笔记/">
+    <time datetime="2017-07-26T16:00:00.000Z" class="entry-date">
+        2017-07-27
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Docker/">Docker</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/27/postgresql/">postgresql</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/27/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/27/Docker学习笔记/">Docker学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a>
+    </div>
+  </aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 John Doe
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
